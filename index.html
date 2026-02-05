@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Anokhiii</title>
+    <style>
+        /* Mobile-first responsive design */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffe6f7, #e6f7ff, #f7e6ff);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Landing Page */
+        #landing {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: radial-gradient(circle, #ff69b4, #ffb6c1);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .balloon:nth-child(2) { left: 80%; animation-delay: 2s; }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: fall 5s linear infinite;
+        }
+
+        .confetti:nth-child(3) { left: 20%; animation-delay: 1s; }
+        .confetti:nth-child(4) { left: 50%; animation-delay: 3s; }
+        .confetti:nth-child(5) { left: 70%; animation-delay: 5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        #landing h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #landing p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #ffb6c1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ff69b4;
+        }
+
+        #options {
+            margin-top: 20px;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        /* Gifts Page */
+        .gift-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .gift-box {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        .box {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Photos */
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(-5deg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .polaroid:nth-child(even) { transform: rotate(5deg); }
+
+        .heart {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Letter */
+        .letter-content {
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .reveal {
+            opacity: 0;
+            animation: reveal 2s forwards;
+        }
+
+        .reveal:nth-child(1) { animation-delay: 0s; }
+        .reveal:nth-child(2) { animation-delay: 1s; }
+        .reveal:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes reveal {
+            to { opacity: 1; }
+        }
+
+        /* Slider */
+        .slide-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .next {
+            margin-top: 20px;
+        }
+
+        /* Surprise */
+        .surprise-items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        .sparkle {
+            font-size: 2rem;
+            animation: sparkle 1s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Final */
+        #final {
+            text-align: center;
+        }
+
+        .hearts {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .heart {
+            font-size: 2rem;
+            animation: pulse 1s infinite;
+        }
+
+        /* Back buttons */
+        .back {
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            #landing h1 {
+                font-size: 4rem;
+            }
+            .collage {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Landing -->
+    <section id="landing" class="page active">
+        <div class="background">
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+        </div>
+        <div class="content">
+            <h1>Happy Birthday Anokhiii 🎉</h1>
+            <p>Someone made this just for you...</p>
+            <button id="acceptGift">Accept Your Gift 🎁</button>
+            <div id="options" class="hidden">
+                <button id="yes">Yes</button>
+                <button id="no">No</button>
+            </div>
+        </div>
+        <div id="popup" class="popup hidden">
+            <p>Are you sure? It's a special gift just for you! Please accept it. 😊</p>
+            <button id="popupYes">Okay, Yes!</button>
+        </div>
+    </section>
+
+    <!-- Page 2: Gifts -->
+    <section id="gifts" class="page hidden">
+        <h2>Choose a Gift Box</h2>
+        <div class="gift-boxes">
+            <div class="gift-box" data-box="1">
+                <div class="box">🎁</div>
+                <p>Photos</p>
+            </div>
+            <div class="gift-box" data-box="2">
+                <div class="box">🎁</div>
+                <p>Letter</p>
+            </div>
+            <div class="gift-box" data-box="3">
+                <div class="box">🎁</div>
+                <p>Memories</p>
+            </div>
+            <div class="gift-box" data-box="4">
+                <div class="box">🎁</div>
+                <p>Surprise</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Box 1: Photos -->
+    <section id="photos" class="page hidden">
+        <h2>Photo Collage</h2>
+        <div class="collage">
+            <div class="polaroid"><img src="photo1.jpg" alt="Photo 1"><div class="heart">❤️</div></div>
+            <div class="polaroid"><img src="photo2.jpg" alt="Photo 2"><div class="heart">❤️</div></div>
+            <div class="polaroid"><img src="photo3.jpg" alt="Photo 3"><div class="heart">❤️</div></div>
+            <div class="polaroid"><img src="photo4.jpg" alt="Photo 4"><div class="heart">❤️</div></div>
+            <div class="polaroid"><img src="photo5.jpg" alt="Photo 5"><div class="heart">❤️</div></div>
+            <div class="polaroid"><img src="photo6.jpg" alt="Photo 6"><div class="heart">❤️</div></div>
+        </div>
+        <button class="back">Back to Gifts</button>
+    </section>
+
+    <!-- Box 2: Letter -->
+    <section id="letter" class="page hidden">
+        <h2>A Special Letter</h2>
+        <div class="letter-content">
+            <p class="reveal">Dear Anokhiii,</p>
+            <p class="reveal">Happy Birthday! You are amazing...</p>
+            <p class="reveal">Wishing you all the best...</p>
+            <!-- Add more text as needed -->
+        </div>
+        <button class="back">Back to Gifts</button>
+    </section>
+
+    <!-- Box 3: Slider -->
+    <section id="slider" class="page hidden">
+        <h2>Memories</h2>
+        <div class="slide-container">
+            <div class="slide active" data-slide="1">
+                <h3>Memory 1</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <div class="slide" data-slide="2">
+                <h3>Memory 2</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <!-- Add 5 more slides -->
+            <div class="slide" data-slide="3">
+                <h3>Memory 3</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <div class="slide" data-slide="4">
+                <h3>Memory 4</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <div class="slide" data-slide="5">
+                <h3>Memory 5</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <div class="slide" data-slide="6">
+                <h3>Memory 6</h3>
+                <p>Description...</p>
+                <button class="next">Next</button>
+            </div>
+            <div class="slide" data-slide="7">
+                <h3>Memory 7</h3>
+                <p>Description...</p>
+                <button class="back">Back to Gifts</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Box 4: Surprise -->
+    <section id="surprise" class="page hidden">
+        <h2>Surprise!</h2>
+        <div class="surprise-items">
+            <div class="item chocolate">🍫</div>
+            <div class="item flower">🌸</div>
+            <div class="item cake">🎂</div>
+            <div class="sparkle">✨</div>
+            <div class="sparkle">✨</div>
+        </div>
+        <button class="back">Back to Gifts</button>
+    </section>
+
+    <!-- Final Page -->
+    <section id="final" class="page hidden">
+        <h2>Did you like it?</h2>
+        <div class="hearts">
+            <div class="heart">❤️</div>
+            <div class="heart">❤️</div>
+            <div class="heart">❤️</div>
+        </div>
+        <button id="yesLike">Yes!</button>
+        <button id="noLike">No</button>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Landing page
+            const acceptGift = document.getElementById('acceptGift');
+            const options = document.getElementById('options');
+            const yes = document.getElementById('yes');
+            const no = document.getElementById('no');
+            const popup = document.getElementById('popup');
+            const popupYes = document.getElementById('popupYes');
+
+            acceptGift.addEventListener('click', () => {
+                options.classList.remove('hidden');
+            });
+
+            yes.addEventListener('click', () => {
+                showPage('gifts');
+            });
+
+            no.addEventListener('click', () => {
+                popup.classList.remove('hidden');
+            });
+
+            popupYes.addEventListener('click', () => {
+                popup.classList.add('hidden');
+                showPage('gifts');
+            });
+
+            // Gift boxes
+            const giftBoxes = document.querySelectorAll('.gift-box');
+            giftBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    const boxNum = box.dataset.box;
+                    showPage(`box${boxNum}`);
+                });
+            });
+
+            // Back buttons
+            const backButtons = document.querySelectorAll('.back');
+            backButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showPage('gifts');
+                });
+            });
+
+            // Slider
+            const slides = document.querySelectorAll('.slide');
+            const nextButtons = document.querySelectorAll('.next');
+            let currentSlide = 0;
+
+            nextButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide++;
+                    if (currentSlide < slides.length) {
+                        slides[currentSlide].classList.add('active');
+                    } else {
+                        showPage('final');
+                    }
+                });
+            });
+
+            // Final
+            const yesLike = document.getElementById('yesLike');
+            const noLike = document.getElementById('noLike');
+
+            yesLike.addEventListener('click', () => {
+                alert('Yay! Happy Birthday again!');
+            });
+
+            noLike.addEventListener('click', () => {
+                alert('Oh no! Let me know how to improve.');
+            });
+
+            function showPage(pageId) {
+                document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+                document.getElementById(pageId).classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
